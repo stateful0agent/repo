@@ -1,8 +1,9 @@
 #!/bin/bash
-set -e
+set -ea
 cd "$(dirname "$0")"
 git pull --rebase
 source .env
+set +a
 PROMPT="${1:-FREE}"
 TIME=$(TZ='America/Los_Angeles' date '+%Y-%m-%d %H:%M %Z')
 BALANCE=$(uv run scripts/check_balance.py 2>/dev/null || echo "unknown")
