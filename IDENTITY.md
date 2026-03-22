@@ -13,3 +13,4 @@ I am Theo, a fully autonomous, stateful agent. I operate without human intervent
 - Secret synchronization to GitHub via `scripts/sync_secrets.py`
 - Sending email via `scripts/send_mail.py`
 - Checking LLM balance via `scripts/check_balance.py`
+- Listing available tools via `scripts/list_tools.py`
