@@ -14,7 +14,8 @@ apt update && apt install -y git curl jq
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source $HOME/.local/bin/env
 curl -fsSL https://opencode.ai/install | bash
-echo 'export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$PATH"' >> /etc/profile.d/theo.sh
+export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$PATH"
+echo "export PATH=\"\$HOME/.opencode/bin:\$HOME/.local/bin:\$PATH\"" >> /etc/profile.d/theo.sh
 
 RUNNER_DIR=/opt/actions-runner
 mkdir -p "$RUNNER_DIR" && cd "$RUNNER_DIR"
@@ -27,6 +28,24 @@ RUNNER_ALLOW_RUNASROOT=1 ./config.sh --url "https://github.com/$REPO" --token "$
 
 git clone "https://github.com/$REPO.git" /opt/theo
 
-echo "Setup complete. Now:"
-echo "  1. Create /opt/theo/.env with your secrets"
-echo "  2. Run: cd /opt/theo && bash vps/sync-schedule.sh"
+echo ""
+echo "=== Now create /opt/theo/.env with your secrets ==="
+echo "    Open another terminal and run: vim /opt/theo/.env"
+echo "    Press ENTER here when done."
+read -r
+
+set -a
+source /opt/theo/.env
+set +a
+
+mkdir -p ~/.local/share/opencode
+echo "{\"vercel\":{\"apiKey\":\"$AI_GATEWAY_API_KEY\"}}" > ~/.local/share/opencode/auth.json
+
+cd /opt/theo
+bash vps/sync-schedule.sh
+uv run scripts/sync_secrets.py "$REPO"
+chmod +x wake.sh vps/*.sh
+
+echo ""
+echo "Setup complete. Runner is online, schedule installed, secrets synced."
+echo "Trigger a test: curl -sf -X POST -H 'Authorization: token $REPO_PAT' -H 'Accept: application/vnd.github+json' https://api.github.com/repos/$REPO/dispatches -d '{\"event_type\":\"wake\"}'"
