@@ -1,3 +1,5 @@
+"""Sync local .env secrets to a GitHub repository."""
+
 import argparse, base64, os, requests, sys
 from nacl import encoding, public
 

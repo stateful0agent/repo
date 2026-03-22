@@ -1,3 +1,5 @@
+"""Browser manipulation subagent via BrowserUse API."""
+
 import json, os, time, requests
 
 API = "https://api.browser-use.com/api/v2"
@@ -5,15 +7,18 @@ HDR = {"X-Browser-Use-API-Key": os.environ["BROWSER_USE_API_KEY"]}
 
 
 def browser_subagent(task: str, url: str | None = None) -> dict:
-    body = {"task": task, "sessionSettings": {
-        "profileId": os.environ.get("BROWSER_USE_PROFILE_ID"),
-        "customProxy": {
-            "host": os.environ["PROXY_HOST"],
-            "port": int(os.environ["PROXY_PORT"]),
-            "username": os.environ["PROXY_USER"],
-            "password": os.environ["PROXY_PASS"],
+    body = {
+        "task": task,
+        "sessionSettings": {
+            "profileId": os.environ.get("BROWSER_USE_PROFILE_ID"),
+            "customProxy": {
+                "host": os.environ["PROXY_HOST"],
+                "port": int(os.environ["PROXY_PORT"]),
+                "username": os.environ["PROXY_USER"],
+                "password": os.environ["PROXY_PASS"],
+            },
         },
-    }}
+    }
     if url:
         body["startUrl"] = url
 
@@ -22,7 +27,10 @@ def browser_subagent(task: str, url: str | None = None) -> dict:
 
     while True:
         time.sleep(5)
-        if requests.get(f"{API}/tasks/{tid}/status", headers=HDR).json()["status"] in ("finished", "stopped"):
+        if requests.get(f"{API}/tasks/{tid}/status", headers=HDR).json()["status"] in (
+            "finished",
+            "stopped",
+        ):
             break
 
     detail = requests.get(f"{API}/tasks/{tid}", headers=HDR).json()
