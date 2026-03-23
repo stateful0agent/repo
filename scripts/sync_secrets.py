@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "requests",
+#     "pynacl",
+# ]
+# ///
 """Sync local .env secrets to a GitHub repository."""
 
 import argparse, base64, os, requests, sys

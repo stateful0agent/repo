@@ -1,3 +1,9 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "requests",
+# ]
+# ///
 """Check Vercel AI Gateway credit balance."""
 
 import argparse, os, requests
