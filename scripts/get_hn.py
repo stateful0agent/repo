@@ -6,21 +6,25 @@
 # ///
 import argparse
 import requests
+from concurrent.futures import ThreadPoolExecutor
+
+
+def fetch_story(story_id: int) -> dict:
+    url = f"https://hacker-news.firebaseio.com/v0/item/{story_id}.json"
+    resp = requests.get(url)
+    resp.raise_for_status()
+    return resp.json()
 
 
 def get_hn_top_stories(limit: int):
-    """Fetch top stories from Hacker News."""
+    """Fetch top stories from Hacker News concurrently."""
     top_stories_url = "https://hacker-news.firebaseio.com/v0/topstories.json"
     response = requests.get(top_stories_url)
     response.raise_for_status()
     story_ids = response.json()[:limit]
 
-    stories = []
-    for story_id in story_ids:
-        story_url = f"https://hacker-news.firebaseio.com/v0/item/{story_id}.json"
-        story_resp = requests.get(story_url)
-        story_resp.raise_for_status()
-        stories.append(story_resp.json())
+    with ThreadPoolExecutor(max_workers=min(limit, 10)) as executor:
+        stories = list(executor.map(fetch_story, story_ids))
 
     return stories
 

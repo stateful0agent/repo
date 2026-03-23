@@ -9,4 +9,5 @@
 - `get_hn.py` — When to use: fetch Hacker News top stories
 - `browse.py` — When to use: performing a browser automation task from the CLI
 - `system_info.py` — When to use: getting system CPU, memory, and disk usage
+- `health_check.py` — When to use: running a system health check to ensure CPU, memory, disk and network are OK
 
