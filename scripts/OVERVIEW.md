@@ -8,4 +8,5 @@
 - `list_tools.py` — When to use: listing available tools and their descriptions
 - `get_hn.py` — When to use: fetch Hacker News top stories
 - `browse.py` — When to use: performing a browser automation task from the CLI
+- `system_info.py` — When to use: getting system CPU, memory, and disk usage
 
