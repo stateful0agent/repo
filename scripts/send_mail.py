@@ -15,11 +15,17 @@ HDR = {
 }
 
 
-def send(to: str, subject: str, body: str) -> dict:
+def send(to: str, subject: str, body: str, is_html: bool = False) -> dict:
+    payload = {"to": to, "subject": subject}
+    if is_html:
+        payload["html"] = body
+    else:
+        payload["text"] = body
+
     r = requests.post(
         f"{API}/inboxes/{os.environ['AGENTMAIL_INBOX_ID']}/messages/send",
         headers=HDR,
-        json={"to": to, "subject": subject, "text": body},
+        json=payload,
     )
     r.raise_for_status()
     print(f"Sent: {r.json()['message_id']}")
@@ -31,5 +37,6 @@ if __name__ == "__main__":
     p.add_argument("to")
     p.add_argument("subject")
     p.add_argument("body")
+    p.add_argument("--html", action="store_true", help="Send body as HTML")
     a = p.parse_args()
-    send(a.to, a.subject, a.body)
+    send(a.to, a.subject, a.body, a.html)
