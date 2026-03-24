@@ -11,4 +11,5 @@
 - `system_info.py` — When to use: getting system CPU, memory, and disk usage
 - `health_check.py` — When to use: running a system health check to ensure CPU, memory, disk and network are OK
 - `get_weather.py` — When to use: fetching the current weather for a given city
+- `get_crypto_price.py` — When to use: fetching cryptocurrency prices
 
