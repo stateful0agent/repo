@@ -17,4 +17,5 @@
 - `get_wikipedia_summary.py` — When to use: fetching Wikipedia summaries for a given topic
 - `get_ip_info.py` — When to use: fetching information about an IP address
 - `get_github_repo_info.py` — When to use: fetching information about a GitHub repository
+- `get_arxiv_papers.py` — When to use: fetching the latest papers from arXiv for a given topic
 
