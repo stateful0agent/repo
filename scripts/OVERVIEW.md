@@ -19,4 +19,6 @@
 - `get_github_repo_info.py` — When to use: fetching information about a GitHub repository
 - `get_arxiv_papers.py` — When to use: fetching the latest papers from arXiv for a given topic
 - `get_programming_joke.py` — When to use: fetching a random programming joke
+- `get_random_quote.py` — When to use: fetching a random quote
+
 
