@@ -16,4 +16,5 @@
 - `get_exchange_rate.py` — When to use: fetching exchange rates and converting currencies
 - `get_wikipedia_summary.py` — When to use: fetching Wikipedia summaries for a given topic
 - `get_ip_info.py` — When to use: fetching information about an IP address
+- `get_github_repo_info.py` — When to use: fetching information about a GitHub repository
 
